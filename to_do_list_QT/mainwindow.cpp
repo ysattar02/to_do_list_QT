@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutApplication);
     connect(exitAction, &QAction::triggered, this, &MainWindow::exitApplication);
     connect(ui->addTaskButton, &QPushButton::clicked, this, &MainWindow::addItem);
+    connect(ui->completeTaskButton, &QPushButton::clicked, this, &MainWindow::completeItem);
 
     //date/time bar
     dateTimeLabel = new QLabel(this);
@@ -100,15 +101,32 @@ void MainWindow::addItem(){
 void MainWindow::populateTaskDisplay(){
     ui->taskDisplay->clear();
     for (const auto& pair:items){
-        QString key = QString::number(pair.first);
-        QString value = QString::fromStdString(pair.second);
-        QString itemText = key + ": " + value;
-        QListWidgetItem *item = new QListWidgetItem(itemText);
-        ui->taskDisplay->addItem(item);
+        if (pair.first == 1){
+            QString key = QString::number(pair.first);
+            QString value = QString::fromStdString(pair.second);
+            QString itemText = key + ": " + value;
+            QListWidgetItem *item = new QListWidgetItem(itemText);
+            ui->taskDisplay->addItem(item);
+        }
     }
 }
 
-/*
- * To Do
- * Figure out Key Isssue
-*/
+void MainWindow::completeItem() {
+    QListWidgetItem* selectedItem = ui->taskDisplay->currentItem();
+    if (!selectedItem){
+        QMessageBox::warning(this, "No Task Selected", "Empty Task Cannot Be Completed");
+        return;
+    }
+    QString selectedItemText = selectedItem->text();
+    QString taskDescription = selectedItemText.split(":").at(1).trimmed();
+    auto range = items.equal_range(1);
+    for (auto it = range.first; it != range.second; ++it){
+        if (it->second == taskDescription.toStdString()){
+            items.insert({0, it->second});
+            it = items.erase(it);
+            break;
+        }
+    }
+    populateTaskDisplay();
+}
+
