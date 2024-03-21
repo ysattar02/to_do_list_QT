@@ -2,8 +2,7 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow) //initializer
 {
     ui->setupUi(this);
 
@@ -12,9 +11,12 @@ MainWindow::MainWindow(QWidget *parent)
     setMenuBar(menuBar);
     QMenu *fileMenu = menuBar->addMenu("&Actions");
     QAction *exitAction = new QAction("&Exit", this);
+    QAction *aboutAction = new QAction("&About", this);
+    fileMenu->addAction(aboutAction);
     fileMenu->addAction(exitAction);
 
-    //connect statements
+    //connect statement for menu actions
+    connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutApplication);
     connect(exitAction, &QAction::triggered, this, &MainWindow::exitApplication);
 
     //date/time bar
@@ -34,26 +36,27 @@ MainWindow::~MainWindow()
 void MainWindow::exitApplication(){
     QMessageBox::StandardButton rv = QMessageBox::StandardButton::Ok;
     do {
-        rv = QMessageBox::information(this, "Dialog", "Exit Program?",
-                                      QMessageBox::StandardButton::Ok |
-                                          QMessageBox::StandardButton::No);
-
+        rv = QMessageBox::information(this, "Dialog", "Exit Program?", QMessageBox::StandardButton::Ok | QMessageBox::StandardButton::No);
         switch(rv) {
         case QMessageBox::StandardButton::Ok:
             printf("You clicked Ok\n");
             QApplication::quit();
             fflush(stdout);
             return;
-
         case QMessageBox::StandardButton::No:
             printf("You clicked No\n");
             fflush(stdout);
             return;
-
         default:
             break;
         }
     } while(true);
+}
+
+void MainWindow::aboutApplication(){
+    QMessageBox::about(this, "About", "App Name: To Do List\n"
+                                      "Author: Yusuf S.\n"
+                                      "Version 1.0_2\n");
 }
 
 void MainWindow::updateDateTime(){

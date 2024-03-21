@@ -25,6 +25,7 @@ public:
 
 private slots:
     void exitApplication();
+    void aboutApplication();
     void updateDateTime();
 
 private:
