@@ -2,12 +2,17 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <cstdlib>
+#include <QButtonGroup>
+#include <QInputDialog>
+#include <QListWidget>
 #include <QMessageBox>
 #include <QLabel>
 #include <QTimer>
 #include <QDateTime>
 #include <QVBoxLayout>
+#include <QFile>
+#include <iostream>
+#include <map>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,10 +32,13 @@ private slots:
     void exitApplication();
     void aboutApplication();
     void updateDateTime();
-
+    void populateMap();
+    void addItem(); //takes in item from text box
+    void populateTaskDisplay(); //adds inputted item to the map and displays it
 private:
     Ui::MainWindow *ui;
     QLabel *dateTimeLabel;
     QTimer *timer;
+    std::multimap<int, std::string> items;
 };
 #endif // MAINWINDOW_H
