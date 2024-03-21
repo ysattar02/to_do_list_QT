@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="taskEntry">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -60,7 +60,7 @@
      <string>Complete Task</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="cleatTaskEntryButton">
+   <widget class="QPushButton" name="clearTaskEntryButton">
     <property name="geometry">
      <rect>
       <x>370</x>

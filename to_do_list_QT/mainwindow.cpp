@@ -8,9 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
     populateMap();
     populateTaskDisplay();
 
-    //creating widget for text entry
-
-
     //declaring menu bar
     QMenuBar *menuBar = new QMenuBar(this);
     setMenuBar(menuBar);
@@ -25,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(exitAction, &QAction::triggered, this, &MainWindow::exitApplication);
     connect(ui->addTaskButton, &QPushButton::clicked, this, &MainWindow::addItem);
     connect(ui->completeTaskButton, &QPushButton::clicked, this, &MainWindow::completeItem);
-    connect(ui->cleatTaskEntryButton, &QPushButton::clicked, this, &MainWindow::clearItemInputBox);
+    connect(ui->clearTaskEntryButton, &QPushButton::clicked, this, &MainWindow::clearItemInputBox);
 
     //date/time bar
     dateTimeLabel = new QLabel(this);
@@ -33,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateDateTime);
     timer->start(1000);
-
 }
 
 MainWindow::~MainWindow()
@@ -76,6 +72,7 @@ void MainWindow::updateDateTime(){
 void MainWindow::populateMap(){
     std::cout << "Populate Function Reached\n";
     QFile dataFile("/Users/yusufsattar/Desktop/to_do_list_QT/to_do_list_QT/data.txt");
+    //QFile dataFile("data.txt");
     if (!dataFile.open(QIODevice::ReadOnly | QIODevice::Text)){
         std::cout << "Data File Failed to Open" << std::endl;
         return;
@@ -87,12 +84,12 @@ void MainWindow::populateMap(){
 }
 
 void MainWindow::addItem(){
-    QString taskDescription = ui->lineEdit->text();
+    QString taskDescription = ui->taskEntry->text();
     if (taskDescription.isEmpty()){
         QMessageBox::warning(this, "Empty Task", "Empty Task Cannot Be Added");
         return;
     }
-    ui->lineEdit->clear();
+    ui->taskEntry->clear();
     QMessageBox::information(this, "Entered Text", "You Entered: " + taskDescription);
     std::string temp = taskDescription.toStdString();
     items.insert(std::make_pair(1, temp));
@@ -132,6 +129,6 @@ void MainWindow::completeItem() {
 }
 
 void MainWindow::clearItemInputBox(){
-    ui->lineEdit->clear();
+    ui->taskEntry->clear();
     std::cout << "Cleard Input Box" << std::endl;
 }
