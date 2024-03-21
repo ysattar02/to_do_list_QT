@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->addTaskButton, &QPushButton::clicked, this, &MainWindow::addItem);
     connect(ui->completeTaskButton, &QPushButton::clicked, this, &MainWindow::completeItem);
     connect(ui->clearTaskEntryButton, &QPushButton::clicked, this, &MainWindow::clearItemInputBox);
+    connect(qApp, &QCoreApplication::aboutToQuit, this, &MainWindow::writeMap);
 
     //date/time bar
     dateTimeLabel = new QLabel(this);
@@ -77,10 +78,20 @@ void MainWindow::populateMap(){
         std::cout << "Data File Failed to Open" << std::endl;
         return;
     }
-    while (!dataFile.atEnd()){
-        QByteArray currLine = dataFile.readLine();
-        std::cout << "Current Line: " << currLine.constData() << std::endl;
+    QTextStream in(&dataFile);
+    while (!in.atEnd()){
+        QString line = in.readLine();
+        QStringList parts = line.split(":");
+        if (parts.size() == 2){
+            int key = parts[0].trimmed().toInt();
+            if (key == 1){
+                QString value = parts[1].trimmed();
+                items.insert({key, value.toStdString()});
+            }
+        }
     }
+    dataFile.close();
+    populateTaskDisplay();
 }
 
 void MainWindow::addItem(){
@@ -131,4 +142,17 @@ void MainWindow::completeItem() {
 void MainWindow::clearItemInputBox(){
     ui->taskEntry->clear();
     std::cout << "Cleard Input Box" << std::endl;
+}
+
+void MainWindow::writeMap(){
+    QFile dataFile("/Users/yusufsattar/Desktop/to_do_list_QT/to_do_list_QT/data.txt");
+    if (!dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)){
+        std::cout << "Data File Failed to Open" << std::endl;
+        return;
+    }
+    QTextStream out(&dataFile);
+    for (auto it = items.begin(); it != items.end(); ++it){
+        out << it->first << ": " << QString::fromStdString(it->second) << "\n";
+    }
+    dataFile.close();
 }
