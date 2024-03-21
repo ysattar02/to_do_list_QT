@@ -36,6 +36,7 @@ private slots:
     void addItem(); //takes in item from text box
     void populateTaskDisplay(); //adds inputted item to the map and displays it
     void completeItem(); //marks item as complete
+    void clearItemInputBox();
 private:
     Ui::MainWindow *ui;
     QLabel *dateTimeLabel;

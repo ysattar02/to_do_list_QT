@@ -7,3 +7,4 @@ March 19, 2024 - Added in Date/Time Functionality at Bottom
 March 20, 2024 - Added in About Functionality in Menu Bar
 March 21, 2024 - Added Functionality for Displaying Tasks and Adding New Tasks
 March 21, 2024 - Added Functionality for Completing Tasks and Set taskDisplay to Only Show Active Tasks
+March 21, 2024 - Added Functionality to Clear Input Box Using Button

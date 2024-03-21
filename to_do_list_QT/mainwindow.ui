@@ -28,17 +28,17 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
-      <width>591</width>
-      <height>201</height>
+      <y>40</y>
+      <width>351</width>
+      <height>151</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="addTaskButton">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>100</y>
+      <x>370</x>
+      <y>120</y>
       <width>100</width>
       <height>32</height>
      </rect>
@@ -50,14 +50,27 @@
    <widget class="QPushButton" name="completeTaskButton">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>320</y>
+      <x>610</x>
+      <y>330</y>
       <width>100</width>
       <height>32</height>
      </rect>
     </property>
     <property name="text">
      <string>Complete Task</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cleatTaskEntryButton">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>150</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear Box</string>
     </property>
    </widget>
   </widget>

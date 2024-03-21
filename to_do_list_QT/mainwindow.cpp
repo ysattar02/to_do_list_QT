@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(exitAction, &QAction::triggered, this, &MainWindow::exitApplication);
     connect(ui->addTaskButton, &QPushButton::clicked, this, &MainWindow::addItem);
     connect(ui->completeTaskButton, &QPushButton::clicked, this, &MainWindow::completeItem);
+    connect(ui->cleatTaskEntryButton, &QPushButton::clicked, this, &MainWindow::clearItemInputBox);
 
     //date/time bar
     dateTimeLabel = new QLabel(this);
@@ -63,7 +64,7 @@ void MainWindow::exitApplication(){
 void MainWindow::aboutApplication(){
     QMessageBox::information(this, "About", "App Name: To Do List\n"
                                       "Author: Yusuf S.\n"
-                                      "Version 1.0_3\n");
+                                      "Version 1.0_4\n");
 }
 
 void MainWindow::updateDateTime(){
@@ -130,3 +131,7 @@ void MainWindow::completeItem() {
     populateTaskDisplay();
 }
 
+void MainWindow::clearItemInputBox(){
+    ui->lineEdit->clear();
+    std::cout << "Cleard Input Box" << std::endl;
+}
