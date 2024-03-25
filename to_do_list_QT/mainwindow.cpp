@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->completeTaskButton, &QPushButton::clicked, this, &MainWindow::completeItem);
     connect(ui->clearTaskEntryButton, &QPushButton::clicked, this, &MainWindow::clearItemInputBox);
     connect(qApp, &QCoreApplication::aboutToQuit, this, &MainWindow::writeMap);
+    connect(ui->clearSelectionButton, &QPushButton::clicked, this, &MainWindow::clearSelection);
 
     //date/time bar
     dateTimeLabel = new QLabel(this);
@@ -110,7 +111,7 @@ void MainWindow::addItem(){
         return;
     }
     ui->taskEntry->clear();
-    QMessageBox::information(this, "Entered Text", "You Entered: " + taskDescription);
+    //QMessageBox::information(this, "Entered Text", "You Entered: " + taskDescription);
     std::string temp = taskDescription.toStdString();
     items.insert(std::make_pair(1, temp));
     populateTaskDisplay();
@@ -130,22 +131,50 @@ void MainWindow::populateTaskDisplay(){
 }
 
 void MainWindow::completeItem() {
-    QListWidgetItem* selectedItem = ui->taskDisplay->currentItem();
-    if (!selectedItem){
-        QMessageBox::warning(this, "No Task Selected", "Empty Task Cannot Be Completed");
+    QMessageBox::StandardButton rv = QMessageBox::StandardButton::Ok;
+    rv = QMessageBox::information(this, "Dialog", "Complete Item?", QMessageBox::StandardButton::Ok | QMessageBox::StandardButton::No);
+    if (rv == QMessageBox::StandardButton::Ok){
+        QListWidgetItem* selectedItem = ui->taskDisplay->currentItem();
+        if (!selectedItem){
+            QMessageBox::warning(this, "No Task Selected", "Empty Task Cannot Be Completed");
+            return;
+        }
+        QString selectedItemText = selectedItem->text();
+        QString taskDescription = selectedItemText.split(":").at(1).trimmed();
+        auto range = items.equal_range(1);
+        for (auto it = range.first; it != range.second; ++it){
+            if (it->second == taskDescription.toStdString()){
+                items.insert({0, it->second});
+                it = items.erase(it);
+                break;
+            }
+        }
+        populateTaskDisplay();
         return;
     }
-    QString selectedItemText = selectedItem->text();
-    QString taskDescription = selectedItemText.split(":").at(1).trimmed();
-    auto range = items.equal_range(1);
-    for (auto it = range.first; it != range.second; ++it){
-        if (it->second == taskDescription.toStdString()){
-            items.insert({0, it->second});
-            it = items.erase(it);
-            break;
-        }
+    else if (rv == QMessageBox::StandardButton::No){
+        return;
+        populateTaskDisplay();
     }
-    populateTaskDisplay();
+    else{
+        return;
+    }
+    // QListWidgetItem* selectedItem = ui->taskDisplay->currentItem();
+    // if (!selectedItem){
+    //     QMessageBox::warning(this, "No Task Selected", "Empty Task Cannot Be Completed");
+    //     return;
+    // }
+    // QString selectedItemText = selectedItem->text();
+    // QString taskDescription = selectedItemText.split(":").at(1).trimmed();
+    // auto range = items.equal_range(1);
+    // for (auto it = range.first; it != range.second; ++it){
+    //     if (it->second == taskDescription.toStdString()){
+    //         items.insert({0, it->second});
+    //         it = items.erase(it);
+    //         break;
+    //     }
+    // }
+    // populateTaskDisplay();
 }
 
 void MainWindow::clearItemInputBox(){
@@ -181,4 +210,8 @@ QString MainWindow::getFileInfo(){
     QString temp = infoOne.absoluteFilePath();
     std::cout << "File Path Absolute: " << temp.toStdString() << std::endl;
     return temp;
+}
+
+void MainWindow::clearSelection(){
+    ui->taskDisplay->clearSelection();
 }

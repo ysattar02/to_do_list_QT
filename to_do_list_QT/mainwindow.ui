@@ -96,7 +96,7 @@
      <string>Task Creation</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="uncompleteTaskButton">
+   <widget class="QPushButton" name="clearSelectionButton">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -106,7 +106,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TBD</string>
+     <string>Clear Selection</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">

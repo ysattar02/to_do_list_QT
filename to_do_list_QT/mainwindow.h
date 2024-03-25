@@ -43,6 +43,7 @@ private slots:
     void completeItem(); //marks item as complete
     void clearItemInputBox();
     void writeMap();
+    void clearSelection();
 
 private:
     Ui::MainWindow *ui;
