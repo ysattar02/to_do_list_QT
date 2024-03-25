@@ -9,3 +9,4 @@ March 21, 2024 - Added Functionality for Displaying Tasks and Adding New Tasks
 March 21, 2024 - Added Functionality for Completing Tasks and Set taskDisplay to Only Show Active Tasks
 March 21, 2024 - Added Functionality to Clear Input Box Using Button
 March 21, 2024 - Added Functionality for Storing Data Between Runs
+March 24, 2024 - Added Dynamic File Creation & File Path Scraping for Data File

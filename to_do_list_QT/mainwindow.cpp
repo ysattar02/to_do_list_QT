@@ -1,10 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//global variables
+QString absoluteFilePath;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) //initializer
 {
     ui->setupUi(this);
+    absoluteFilePath = getFileInfo();
     populateMap();
     populateTaskDisplay();
 
@@ -31,6 +35,11 @@ MainWindow::MainWindow(QWidget *parent)
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateDateTime);
     timer->start(1000);
+
+    //Style Sheet Entries
+    QColor green = QColor(Qt::green);
+    QColor blue = QColor(Qt::blue);
+    QColor red = QColor(Qt::red);
 }
 
 MainWindow::~MainWindow()
@@ -61,7 +70,7 @@ void MainWindow::exitApplication(){
 void MainWindow::aboutApplication(){
     QMessageBox::information(this, "About", "App Name: To Do List\n"
                                       "Author: Yusuf S.\n"
-                                      "Version 1.0_4\n");
+                                      "Version 1.0_5\n");
 }
 
 void MainWindow::updateDateTime(){
@@ -72,7 +81,7 @@ void MainWindow::updateDateTime(){
 
 void MainWindow::populateMap(){
     std::cout << "Populate Function Reached\n";
-    QFile dataFile("/Users/yusufsattar/Desktop/to_do_list_QT/to_do_list_QT/data.txt");
+    QFile dataFile(absoluteFilePath);
     //QFile dataFile("data.txt");
     if (!dataFile.open(QIODevice::ReadOnly | QIODevice::Text)){
         std::cout << "Data File Failed to Open" << std::endl;
@@ -141,11 +150,12 @@ void MainWindow::completeItem() {
 
 void MainWindow::clearItemInputBox(){
     ui->taskEntry->clear();
-    std::cout << "Cleard Input Box" << std::endl;
+    std::cout << "Cleared Input Box" << std::endl;
 }
 
 void MainWindow::writeMap(){
-    QFile dataFile("/Users/yusufsattar/Desktop/to_do_list_QT/to_do_list_QT/data.txt");
+    QFile dataFile(absoluteFilePath);
+    //QFile dataFile("data.txt");
     if (!dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)){
         std::cout << "Data File Failed to Open" << std::endl;
         return;
@@ -155,4 +165,20 @@ void MainWindow::writeMap(){
         out << it->first << ": " << QString::fromStdString(it->second) << "\n";
     }
     dataFile.close();
+}
+
+QString MainWindow::getFileInfo(){
+    QFile dataFile("data.txt");
+    if (dataFile.exists()){
+        std::cout << "File Exists" << std::endl;
+    }
+    else{
+        dataFile.open(QIODevice::WriteOnly);
+        dataFile.close();
+        std::cout << "File Created Successfully" << std::endl;
+    }
+    QFileInfo infoOne("data.txt");
+    QString temp = infoOne.absoluteFilePath();
+    std::cout << "File Path Absolute: " << temp.toStdString() << std::endl;
+    return temp;
 }

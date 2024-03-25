@@ -11,6 +11,7 @@
 #include <QDateTime>
 #include <QVBoxLayout>
 #include <QFile>
+#include <QFileInfo>
 #include <iostream>
 #include <map>
 
@@ -20,6 +21,9 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+//global variables
+extern QString absoluteFilePath;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -27,6 +31,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QString getFileInfo();
 
 private slots:
     void exitApplication();
@@ -38,6 +43,7 @@ private slots:
     void completeItem(); //marks item as complete
     void clearItemInputBox();
     void writeMap();
+
 private:
     Ui::MainWindow *ui;
     QLabel *dateTimeLabel;
