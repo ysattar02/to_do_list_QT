@@ -51,7 +51,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         taskDisplay = new QListWidget(centralwidget);
         taskDisplay->setObjectName("taskDisplay");
-        taskDisplay->setGeometry(QRect(0, 220, 801, 281));
+        taskDisplay->setGeometry(QRect(10, 220, 771, 281));
         taskEntry = new QLineEdit(centralwidget);
         taskEntry->setObjectName("taskEntry");
         taskEntry->setGeometry(QRect(10, 30, 271, 71));

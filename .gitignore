@@ -1,2 +1,5 @@
 build-to_do_list_QT-Qt_6_6_2_for_macOS-Debug/
-build-to_do_list_QT-Qt_6_6_2_for_macOS-Release
+build-to_do_list_QT-Qt_6_6_2_for_macOS-Release/
+build-to_do_list_QT-Qt_6_6_2_for_macOS-Profile/
+data.txt
+

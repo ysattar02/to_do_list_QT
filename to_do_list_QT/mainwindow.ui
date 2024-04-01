@@ -17,9 +17,9 @@
    <widget class="QListWidget" name="taskDisplay">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>220</y>
-      <width>801</width>
+      <width>771</width>
       <height>281</height>
      </rect>
     </property>

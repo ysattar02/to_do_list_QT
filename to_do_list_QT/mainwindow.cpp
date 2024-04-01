@@ -2,13 +2,13 @@
 #include "ui_mainwindow.h"
 
 //global variables
-QString absoluteFilePath;
+QString absoluteFilePath = "/Users/yusufsattar/Desktop/to_do_list_QT/data.txt";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) //initializer
 {
     ui->setupUi(this);
-    absoluteFilePath = getFileInfo();
+    //absoluteFilePath = getFileInfo();
     populateMap();
     populateTaskDisplay();
 
@@ -41,6 +41,32 @@ MainWindow::MainWindow(QWidget *parent)
     QColor green = QColor(Qt::green);
     QColor blue = QColor(Qt::blue);
     QColor red = QColor(Qt::red);
+    QColor black = QColor(Qt::black);
+    QColor darkPurple(72, 28, 94);
+
+    //changing background color of central application
+    ui->centralwidget->setAutoFillBackground(true);
+    QPalette paletteOne = QPalette();
+    paletteOne.setColor(QPalette::Window, darkPurple);
+    ui->centralwidget->setPalette(paletteOne);
+
+    //changing color palette for the task entry widget
+    ui->taskEntry->setAutoFillBackground(true);
+    QPalette paletteTwo = QPalette();
+    paletteTwo.setColor(QPalette::Window, green);
+    ui->taskEntry->setPalette(paletteTwo);
+
+    //changing color palette for the task entry widget
+    ui->taskDisplay->setAutoFillBackground(true);
+    QPalette paletteThree = QPalette();
+    paletteThree.setColor(QPalette::Window, green);
+    ui->taskDisplay->setPalette(paletteThree);
+
+    //changing background of calendar widget
+    ui->calendarWidget->setAutoFillBackground(true);
+    QPalette paletteFour = QPalette();
+    paletteFour.setColor(QPalette::Window, green);
+    ui->calendarWidget->setPalette(paletteFour);
 }
 
 MainWindow::~MainWindow()

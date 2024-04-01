@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QButtonGroup>
 #include <QInputDialog>
+#include <QPalette>
 #include <QListWidget>
 #include <QMessageBox>
 #include <QLabel>
